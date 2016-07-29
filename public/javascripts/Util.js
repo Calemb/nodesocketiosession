@@ -1,13 +1,22 @@
-﻿$(document).ready(function () {
+﻿
+$(document).ready(function() {
     //create socket connection
-    var socket = io.connect('http://localhost:3000');
+    var socket;
 
     //log In with ajax, ask app.js as serwer about users
-    $("#aLogin").click(function () {
-      var email = $("#iEmail").val();
-      var pass = $("#iPass").val();
-      socket.emit('login', {email, pass});
-      // return false;
+    $("#aSocket").click(function() {
+        socket = io.connect('http://localhost:3000');
+        return false;
+    });
+
+    $("#aLogin").click(function() {
+        var email = $("#iEmail").val();
+        var pass = $("#iPass").val();
+        socket.emit('login', {
+            email,
+            pass
+        });
+        // return false;
 
         //
         // $("#link").html("PROCESSING");
@@ -23,16 +32,16 @@
         //
         return false;
     });
-    $("#aLogout").click(function () {
+    $("#aLogout").click(function() {
 
         $("#link").html("PROCESSING");
         $.ajax({
             url: "logout",
             method: "POST",
             data: {}
-        }).done(function (msg) {
+        }).done(function(msg) {
             $("#link").html(msg);
-        }).fail(function (jqXHR, textStatus) {
+        }).fail(function(jqXHR, textStatus) {
             $("#link").html("FAIL" + textStatus);
         });
 
@@ -40,12 +49,14 @@
     });
 
     //just click
-    $("#link").click(function () {
-        socket.emit('linkClkEvent', { my: 'data' });
+    $("#link").click(function() {
+        socket.emit('linkClkEvent', {
+            my: 'data'
+        });
         return false;
     });
 
-    socket.on('inputResponse', function (response) {
-        console.log(response);
-    });
+    // socket.on('inputResponse', function(response) {
+    //     console.log(response);
+    // });
 });
