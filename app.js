@@ -61,7 +61,7 @@ var io = require('socket.io')(server);
 // });
 io.set('authorization', passportSocketIo.authorize({
     cookieParser: cookieParser,
-    // key: 'express.sid',
+    key: 'express.sid',
     secret: 'keycat',
     store: sessStore,
     success: onAuthorizeSuccess,
